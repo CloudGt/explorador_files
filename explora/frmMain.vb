@@ -9,10 +9,10 @@ Public Class frmMain
     ' ****************************************************************************
     ' Ruta del directorio actual en que nos encontramos.
   Private sActual As String
-  ' Indica si las columnas están ordenadas ascendentemente (TRUE) o
+  ' Indica si las columnas estÃ¡n ordenadas ascendentemente (TRUE) o
   ' descendentemente (FALSE).
   Private bColumnaAsc() As Boolean = {False, False, False, False, False}
-  ' Almacena los datos temporales de la operación a realizar sobre un fichero
+  ' Almacena los datos temporales de la operaciÃ³n a realizar sobre un fichero
   ' o un directorio.
   Private stBuffer As Buffer
 
@@ -20,7 +20,7 @@ Public Class frmMain
     ' * ABRIR
     ' *
     ' * Se encarga de preparar el sistema para mostrar el contenido de un
-    ' * directorio y luego llama a la función encargada de mostrar dicho
+    ' * directorio y luego llama a la funciÃ³n encargada de mostrar dicho
     ' * contenido.
     ' ****************************************************************************
   Private Sub abrir(ByVal sRuta As String)
@@ -30,7 +30,7 @@ Public Class frmMain
         abrirDirectorio(sNueva, sActual, Me.lsVista, Me.chkOcultos.Checked)
 
         'Me.txtRuta.Text = sActual
-        ' Obtención del número de objetos de la vista.
+        ' ObtenciÃ³n del nÃºmero de objetos de la vista.
         Me.slblObjetos.Text = Me.lsVista.Items.Count.ToString
     End Sub
 
@@ -39,8 +39,8 @@ Public Class frmMain
   ' * ABRIRSELECCION
   ' *
   ' * Permite abrir el elemento seleccionado en la lista de objetos. En el caso
-  ' * de ser un directorio mostrará su contenido, y en el caso de ser un fichero
-  ' * lo abrirá con su programa asociado.
+  ' * de ser un directorio mostrarÃ¡ su contenido, y en el caso de ser un fichero
+  ' * lo abrirÃ¡ con su programa asociado.
   ' ****************************************************************************
   Private Sub abrirSeleccion()
     ' Variable auxiliar en la que almacenar el elemento de la lista
@@ -48,7 +48,7 @@ Public Class frmMain
 
     ' Si hay un elemento seleccionado en la lista
     If (Me.lsVista.SelectedItems.Count > 0) Then
-      ' Obtención de los datos del elemento seleccionado
+      ' ObtenciÃ³n de los datos del elemento seleccionado
       lviElemento = Me.lsVista.SelectedItems(0)
 
       ' Si el tipo de elemento seleccionado es un directorio se procede a su
@@ -62,7 +62,7 @@ Public Class frmMain
       Else
         ' En el caso de ser un fichero se intenta abrir con su programa
         ' asociado. Si no tiene un programa asociado o no se dispone de
-        ' permisos de apertura, saltará una excepción.
+        ' permisos de apertura, saltarÃ¡ una excepciÃ³n.
         Try
           Process.Start(lviElemento.ToolTipText)
         Catch ex As Exception
@@ -95,10 +95,11 @@ Public Class frmMain
   ' ****************************************************************************
   ' * CARGA DEL FORMULARIO
   ' ****************************************************************************
-  ' * Operaciones a realizar al cargar el formulario de la aplicación.
+  ' * Operaciones a realizar al cargar el formulario de la aplicaciÃ³n.
   ' ****************************************************************************
     Private Sub frmMain_Load(ByVal sender As System.Object, _
                              ByVal e As System.EventArgs) Handles MyBase.Load
+        'ObtenciÃ³n del parametro para abrir carpeta
         Dim REFERENCIA As String
 
         If Environment.GetCommandLineArgs.Length > 1 Then
@@ -113,22 +114,23 @@ Public Class frmMain
             End If
 
             ToolStripLabel1.Text = ToolStripLabel1.Text & "  " & REFERENCIA
+            'Cambiar directorio inicial. ejemplo---  c:\
             DIR_ORIGINAL = "\\192.168.0.1\SHARED\" & REFERENCIA & "\"
             'DIR_ORIGINAL = "\\192.168.0.1\SHARED\RTU\"
         Else
             MsgBox("No se especifico referencia." & Chr(10) & Chr(13) & "Consulte con el Admin del sistema", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Explorador")
             End
         End If
-        ' Inicialización del directorio
+        ' InicializaciÃ³n del directorio
         sActual = DIR_ORIGINAL
         RutGuarda = DIR_ORIGINAL
-        ' Establecimiento del título de la ventana.
+        ' Establecimiento del tÃ­tulo de la ventana.
         Me.Text = "Explordor FILES DACOTRANS " & My.Application.Info.Version.ToString
         abrir(sActual)
-        ' Obtención de la lista de unidades del sistema
+        ' ObtenciÃ³n de la lista de unidades del sistema
         '*rellenarUnidades(Me.cmbUnidades)
 
-        ' Si hay seleccionada al menos una unidad, se intentará abrir la misma.
+        ' Si hay seleccionada al menos una unidad, se intentarÃ¡ abrir la misma.
         ABRIR_DIRECTORIO.StartInfo.FileName = Environment.GetEnvironmentVariable("windir").ToString & "\explorer.exe"
         ABRIR_DIRECTORIO.StartInfo.Arguments = ""
     End Sub
@@ -153,7 +155,7 @@ Public Class frmMain
   ' ****************************************************************************
   ' * CONTROL DE TECLAS PULSADAS
   ' ****************************************************************************
-  ' * Controla la tecla pulsada en la lista para verificar la acción a realizar.
+  ' * Controla la tecla pulsada en la lista para verificar la acciÃ³n a realizar.
   ' ****************************************************************************
   Private Sub lsVista_KeyPress(ByVal sender As System.Object, _
                             ByVal e As System.Windows.Forms.KeyPressEventArgs) _
@@ -170,10 +172,10 @@ Public Class frmMain
 
 
   ' ****************************************************************************
-  ' * ACTIVADORES DE ACCIÓN SUBIR
+  ' * ACTIVADORES DE ACCIÃ“N SUBIR
   ' ****************************************************************************
-  ' * El primero controla las acciones a realizar al hacer clic en el botón
-  ' * Subir y el segundo el menú contextual Subir.
+  ' * El primero controla las acciones a realizar al hacer clic en el botÃ³n
+  ' * Subir y el segundo el menÃº contextual Subir.
   ' ****************************************************************************
     Private Sub btnSubir_Click(ByVal sender As System.Object, _
                            ByVal e As System.EventArgs) Handles btnSubir.Click
@@ -199,10 +201,10 @@ Public Class frmMain
 
 
   ' ****************************************************************************
-  ' * ACTIVADORES DE ACCIÓN ACTUALIZAR
+  ' * ACTIVADORES DE ACCIÃ“N ACTUALIZAR
   ' ****************************************************************************
-  ' * El primero controla las acciones a realizar al hacer clic en el botón
-  ' * Subir y el segundo el menú contextual Subir.
+  ' * El primero controla las acciones a realizar al hacer clic en el botÃ³n
+  ' * Subir y el segundo el menÃº contextual Subir.
   ' ****************************************************************************
   Private Sub btnActualizar_Click(ByVal sender As System.Object, _
                                   ByVal e As System.EventArgs) _
@@ -259,16 +261,16 @@ Public Class frmMain
 
 
   ' ****************************************************************************
-  ' * ORDENACIÓN DE ELEMENTOS
+  ' * ORDENACIÃ“N DE ELEMENTOS
   ' ****************************************************************************
-  ' * Primera implementación de la ordenación de elementos en la lista.
+  ' * Primera implementaciÃ³n de la ordenaciÃ³n de elementos en la lista.
   ' ****************************************************************************
   Private Sub lsVista_ColumnClick(ByVal sender As System.Object, _
                                   ByVal e As System.Windows.Forms.ColumnClickEventArgs) _
                                   Handles lsVista.ColumnClick
     ' Si el orden anterior no es ascendente, se pone el orden actual como
     ' ascendente y se actualiza la lista de orden. En caso contrario, se
-    ' establece el orden como descendente y se pone la lista de órdenes a
+    ' establece el orden como descendente y se pone la lista de Ã³rdenes a
     ' FALSE.
     If Not bColumnaAsc(e.Column) Then
       indicarOrdenColumnas(bColumnaAsc, e.Column)
@@ -276,24 +278,24 @@ Public Class frmMain
       indicarOrdenColumnas(bColumnaAsc)
     End If
 
-    ' Ordenación de la lista de elementos.
+    ' OrdenaciÃ³n de la lista de elementos.
     Me.lsVista.ListViewItemSorter = New cComparaLista(e.Column, _
                                                bColumnaAsc(e.Column), _
                                                Me.lsVista.Columns(e.Column).Tag)
   End Sub
     ' ****************************************************************************
-    ' * CONTROL DEL MENÚ CONTEXTUAL
+    ' * CONTROL DEL MENÃš CONTEXTUAL
     ' ****************************************************************************
-    ' Controla la aparición de la opción de menú Abrir al abrir el menú contextual
+    ' Controla la apariciÃ³n de la opciÃ³n de menÃº Abrir al abrir el menÃº contextual
     ' ****************************************************************************
   Private Sub cmsMenu_Opening(ByVal sender As System.Object, _
                               ByVal e As System.ComponentModel.CancelEventArgs) _
                               Handles cmsMenu.Opening
-    ' Si hay un elemento seleccionado, se activa la opción de menú Abrir.
+    ' Si hay un elemento seleccionado, se activa la opciÃ³n de menÃº Abrir.
     If Me.lsVista.SelectedItems.Count = 1 Then
       Me.mnAbrir.Visible = True
 
-      ' directorio, en caso contrario, se mostrará el icono de abrir fichero.
+      ' directorio, en caso contrario, se mostrarÃ¡ el icono de abrir fichero.
       If Me.lsVista.SelectedItems(0).SubItems(2).Text = "Directorio" Then
         Me.mnAbrir.Image = My.Resources.icoAbrirDir
       Else
@@ -303,7 +305,7 @@ Public Class frmMain
   End Sub
 
   ' ****************************************************************************
-  ' * ACTIVACIÓN/DESACTIVACIÓN CONTROLES CON ELEMENTOS SELECCIONADOS
+  ' * ACTIVACIÃ“N/DESACTIVACIÃ“N CONTROLES CON ELEMENTOS SELECCIONADOS
   ' ****************************************************************************
   ' Activa o desactiva los controles referidos a los ficheros y directorios
   ' dependiendo de si se encuentran seleccionados o no.
@@ -313,7 +315,7 @@ Public Class frmMain
                                            Handles lsVista.SelectedIndexChanged
     Dim bActivar As Boolean
     ' Si hay un fichero o directorio seleccionado se controlan los botones y
-    ' elementos de menú.
+    ' elementos de menÃº.
     If Me.lsVista.SelectedItems.Count = 1 Then
       bActivar = True
 
@@ -322,7 +324,7 @@ Public Class frmMain
     Else
       bActivar = False
     End If
-        ' Actualización del estado de los controles
+        ' ActualizaciÃ³n del estado de los controles
         Me.pnlAtributos.Visible = bActivar
     Me.mnAbrir.Visible = bActivar
     End Sub
@@ -332,7 +334,7 @@ Public Class frmMain
     ' ****************************************************************************
     ' MOSTRARDATOSFICHERO
     ' ****************************************************************************
-    ' Muestra información sobre el fichero seleccionado.
+    ' Muestra informaciÃ³n sobre el fichero seleccionado.
   Private Sub mostrarDatosFichero()
     Dim imgImagen As Image
     Dim sAuxNombre As String
@@ -355,7 +357,7 @@ Public Class frmMain
                                  " px/pulgada"
       Catch ex As Exception
         Me.pcbImagen.Image = My.Resources.imgNoImagen
-        Me.lblDimensiones.Text = "Archivo no válido"
+        Me.lblDimensiones.Text = "Archivo no vÃ¡lido"
         Me.lblResolucionHorizontal.Text = "-"
         Me.lblResolucionVertical.Text = "-"
       End Try
@@ -429,7 +431,7 @@ Public Class frmMain
     End Sub
     Sub CopiaArchivoConProgreso(ByVal path As String, ByVal path2 As String, ByVal mediafile As String)
         'path = ruta del lugar de origen, en donde se encuentra el archivo
-        'path2 = ruta del lugar de destino, a donde se copiará el archivo
+        'path2 = ruta del lugar de destino, a donde se copiarÃ¡ el archivo
         'mediafile = nombre del archivo a copiar
         Dim fi As New IO.FileInfo(mediafile)
         Dim sr As New IO.FileStream(path, IO.FileMode.Open) 'lugar de origen
@@ -457,7 +459,7 @@ Public Class frmMain
     ' COPIAR
     ' 
     ' Copia a memoria el nombre del fichero o directorio, e indica que la
-    ' operación que debe ser llevada a cabo es de copiado.
+    ' operaciÃ³n que debe ser llevada a cabo es de copiado.
     ' ****************************************************************************
     Private Sub copiar()
         If Me.lsVista.SelectedItems.Count = 1 Then

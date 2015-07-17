@@ -99,31 +99,17 @@ Public Class frmMain
   ' ****************************************************************************
     Private Sub frmMain_Load(ByVal sender As System.Object, _
                              ByVal e As System.EventArgs) Handles MyBase.Load
-        Dim REFERENCIA As String
 
-        If Environment.GetCommandLineArgs.Length > 1 Then
-            REFERENCIA = Environment.GetCommandLineArgs(1).ToString
-            'REFERENCIA = "RTU"
-            'MsgBox(REFERENCIA.Substring(0, 8))
-            If REFERENCIA.Substring(0, 8).Equals("CLIENTES") Then
-
-                Call CREAR_CLIENTE(REFERENCIA)
-            Else
-                Call CREAR_REFERENCIA(REFERENCIA)
-            End If
-
-            ToolStripLabel1.Text = ToolStripLabel1.Text & "  " & REFERENCIA
-            DIR_ORIGINAL = "\\192.168.0.1\SHARED\" & REFERENCIA & "\"
-            'DIR_ORIGINAL = "\\192.168.0.1\SHARED\RTU\"
-        Else
-            MsgBox("No se especifico referencia." & Chr(10) & Chr(13) & "Consulte con el Admin del sistema", MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Explorador")
-            End
-        End If
-        ' Inicialización del directorio
+        Dim matriz
+        matriz = My.Application.Info.DirectoryPath.Split(":")
+        Call CREAR_carpetas()
+        ToolStripLabel1.Text = ToolStripLabel1.Text
+        'sustituir por la  unidad a abrir
+        DIR_ORIGINAL = matriz(0) & ":\"
         sActual = DIR_ORIGINAL
         RutGuarda = DIR_ORIGINAL
         ' Establecimiento del título de la ventana.
-        Me.Text = "Explordor FILES DACOTRANS " & My.Application.Info.Version.ToString
+        Me.Text = "Explorador de unidades " & My.Application.Info.Version.ToString
         abrir(sActual)
         ' Obtención de la lista de unidades del sistema
         '*rellenarUnidades(Me.cmbUnidades)
@@ -405,26 +391,11 @@ Public Class frmMain
         End If
 
     End Sub
-    Sub CREAR_REFERENCIA(ByVal REFERENCIA As String)
-        If Not (My.Computer.FileSystem.DirectoryExists("\\192.168.0.1\Shared\" + REFERENCIA)) Then
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + CapFac)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + Mail)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + NC)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + ND)
-            'My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + CapBL)
-            'My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + CapMbl)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + general_transporte)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + NCobro)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + SolCheq)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + DVar)
-        End If
-    End Sub
-
-    Sub CREAR_CLIENTE(ByVal REFERENCIA As String)
-        If Not (My.Computer.FileSystem.DirectoryExists("\\192.168.0.1\Shared\" + REFERENCIA)) Then
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA)
-            My.Computer.FileSystem.CreateDirectory("\\192.168.0.1\Shared\" + REFERENCIA + "\" + DVar)
+   
+   
+    Sub CREAR_carpetas()
+        If Not (My.Computer.FileSystem.DirectoryExists(DIR_ORIGINAL)) Then
+            My.Computer.FileSystem.CreateDirectory(DIR_ORIGINAL + DVar)
         End If
     End Sub
     Sub CopiaArchivoConProgreso(ByVal path As String, ByVal path2 As String, ByVal mediafile As String)
@@ -523,6 +494,10 @@ Public Class frmMain
     End Sub
 
     Private Sub ttConsejo_Popup(sender As Object, e As PopupEventArgs) Handles ttConsejo.Popup
+
+    End Sub
+
+    Private Sub ToolStripLabel1_Click(sender As Object, e As EventArgs) Handles ToolStripLabel1.Click
 
     End Sub
 End Class

@@ -414,8 +414,8 @@ Partial Class frmMain
         '
         Me.ToolStripLabel1.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold)
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(160, 37)
-        Me.ToolStripLabel1.Text = "Referencia:"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(117, 37)
+        Me.ToolStripLabel1.Text = "Unidad:"
         '
         'tssSeparador05
         '
